@@ -26,8 +26,6 @@ from subprocess import Popen, PIPE
 
 ###############################################################################
 def main():
-    # global test result
-    result = 0;
     
     parser = OptionParser(usage="usage: %prog [options]")
     parser.add_option("-e", "--encircular", type="string", dest="encircular_exe",
@@ -40,6 +38,8 @@ def main():
         help="Total number of tests to generate", default=100)
     parser.add_option("--length", type="int", dest="instr_length",
         help="Maximum instruction lenght", default=100)
+    parser.add_option("--plot", action="store_true", dest="plot",
+        help="Create plot file for each point")
 
     (options, args) = parser.parse_args()
     print ("options: %s\n" % options);
@@ -93,8 +93,47 @@ def main():
         exit_code = process.wait()
         print (" %5d: %s %s\n%s" % (++i, exit_code, run, output))
         
-        
-
+    # Plot
+    if (options.plot):
+        i = 0
+        for run in test_runs:
+            f = open("plot_data_%d.dat" % ++i, 'w')
+            x = 0
+            y = 0
+            d = 'N'
+            f.write("%d %d\n" % (x,y))
+            for p in run:
+                if (p == 'G'):
+                    if (d == 'N'):
+                        x += 1
+                    elif (d == 'S'):
+                        x -= 1
+                    elif (d == 'E'):
+                        y += 1
+                    elif (d == 'W'):
+                        y -= 1
+                        
+                    f.write("%d %d\n" % (x,y))
+                elif (p == 'L'):
+                    if (d == 'N'):
+                        d='W'
+                    elif (d == 'S'):
+                        d='E'
+                    elif (d == 'E'):
+                        d='N'
+                    elif (d == 'W'):
+                        d='S'
+                elif (p == 'R'):
+                    if (d == 'N'):
+                        d='E'
+                    elif (d == 'S'):
+                        d='W'
+                    elif (d == 'E'):
+                        d='S'
+                    elif (d == 'W'):
+                        d='N'
+                                    
+            f.close()
 
 ###############################################################################
 if __name__ == "__main__":
