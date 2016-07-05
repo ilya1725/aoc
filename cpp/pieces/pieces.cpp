@@ -1,5 +1,8 @@
 // pieces.cpp : Defines the entry point for the console application.
 //
+// The project just explores the reference member variables: store the class variable as
+// a reference and update the object from th eoutside.
+//
 
 #include <vector>
 #include <iostream>
