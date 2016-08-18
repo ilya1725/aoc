@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "inheritance", "inheritance\inheritance.vcxproj", "{F20FDB2F-2FFD-428C-A988-110656A591D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pieces", "pieces\pieces.vcxproj", "{E1422F10-F76B-4A1E-B626-84B2326D698D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "constructors", "constructors\constructors.vcxproj", "{77F3D5C3-1F37-4E60-B30D-8D35AA874494}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "location-file", "location-file\location-file.vcxproj", "{68BB1A25-AE59-49E6-A1AA-12A3D770D726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,22 @@ Global
 		{E1422F10-F76B-4A1E-B626-84B2326D698D}.Release|x64.Build.0 = Release|x64
 		{E1422F10-F76B-4A1E-B626-84B2326D698D}.Release|x86.ActiveCfg = Release|Win32
 		{E1422F10-F76B-4A1E-B626-84B2326D698D}.Release|x86.Build.0 = Release|Win32
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Debug|x64.ActiveCfg = Debug|x64
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Debug|x64.Build.0 = Debug|x64
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Debug|x86.ActiveCfg = Debug|Win32
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Debug|x86.Build.0 = Debug|Win32
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Release|x64.ActiveCfg = Release|x64
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Release|x64.Build.0 = Release|x64
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Release|x86.ActiveCfg = Release|Win32
+		{77F3D5C3-1F37-4E60-B30D-8D35AA874494}.Release|x86.Build.0 = Release|Win32
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Debug|x64.ActiveCfg = Debug|x64
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Debug|x64.Build.0 = Debug|x64
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Debug|x86.ActiveCfg = Debug|Win32
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Debug|x86.Build.0 = Debug|Win32
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Release|x64.ActiveCfg = Release|x64
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Release|x64.Build.0 = Release|x64
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Release|x86.ActiveCfg = Release|Win32
+		{68BB1A25-AE59-49E6-A1AA-12A3D770D726}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
