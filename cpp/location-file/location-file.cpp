@@ -15,7 +15,15 @@ public:
 	// local enum class of errors
 	enum class error_code {
 		no_error = 0,
-		err_data_file = -1
+		err_data_file = -1,
+		err_no_data = -2,
+		err_inv_data = -3
+	};
+
+	// local type describing one location point
+	struct point_t {
+		unsigned long x;
+		unsigned long y;
 	};
 
 public:
@@ -42,10 +50,12 @@ public:
 
 				if (is.fail()) {
 					cout << "Unexpected format in line '" << line << "'. It will be skipped\n";
-				} else if (!is.eof()) {
+				}
+				else if (!is.eof()) {
 					// There is some more data left in the string
 					cout << "Unexpected format in line '" << line << "'. Only first two values were read\n";
-				} else {
+				}
+				else {
 					// add data to the vector
 					m_trace.push_back(point_t{ x, y });
 				}
@@ -53,11 +63,11 @@ public:
 		}
 
 		// We are done reading, just verify the status
-		if (infile.bad()) {
+		if (infile.eof()) {
+			cout << "End of file reached successfully\n";
+		} else if (infile.bad()) {
 			cout << "I/O error while reading\n";
 			return error_code::err_data_file;
-		} else if (infile.eof()) {
-			cout << "End of file reached successfully\n";
 		} else if (infile.fail()) {
 			cout << "Non-integer data encountered\n";
 			return error_code::err_data_file;
@@ -66,11 +76,26 @@ public:
 		return error_code::no_error;
 	}
 
+	// Verify that all location values are in the specied range
+	// ul - upper left point's coordinates
+	// lr - lower right point's coordinates
+	error_code verify(point_t ul, point_t lr) const {
+		if (!m_trace.size()) {
+			return error_code::err_no_data;
+		}
+
+		for (auto p : m_trace) {
+			if ((p.x < ul.x || p.x > lr.x) || (p.y > ul.y || p.y < lr.y)) {
+				return error_code::err_inv_data;
+			}
+		}
+
+		return error_code::no_error;
+	}
+
+	const unsigned long getLocations() const { return m_trace.size(); };
+
 private:
-	struct point_t {
-		unsigned long x;
-		unsigned long y;
-	};
 
 	vector<point_t>	m_trace;
 };
@@ -88,6 +113,8 @@ int main(int argc, char ** argv)
 	if (location_data.load(argv[1]) != location::error_code::no_error) {
 		return -1;
 	}
+
+	cout << "Total: " << location_data.getLocations() << endl;
 
     return 0;
 }
