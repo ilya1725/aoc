@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "misc-coding", "misc-coding\misc-coding.vcxproj", "{8EB12242-F399-403A-B7C7-4B4A7DE28A77}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "class-hierarchy", "class-hierarchy\class-hierarchy.vcxproj", "{787551A4-82F7-406A-8A2B-252614B0AF40}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "variable-sized-arrays", "variable-sized-arrays\variable-sized-arrays.vcxproj", "{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{787551A4-82F7-406A-8A2B-252614B0AF40}.Release|x64.Build.0 = Release|x64
 		{787551A4-82F7-406A-8A2B-252614B0AF40}.Release|x86.ActiveCfg = Release|Win32
 		{787551A4-82F7-406A-8A2B-252614B0AF40}.Release|x86.Build.0 = Release|Win32
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Debug|x64.ActiveCfg = Debug|x64
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Debug|x64.Build.0 = Debug|x64
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Debug|x86.ActiveCfg = Debug|Win32
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Debug|x86.Build.0 = Debug|Win32
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Release|x64.ActiveCfg = Release|x64
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Release|x64.Build.0 = Release|x64
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Release|x86.ActiveCfg = Release|Win32
+		{58644FB4-3D0E-4D14-A0C1-D4B704C6CC1F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
