@@ -147,6 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="location-file.cpp" />
+    <ClCompile Include="location_train.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="location_train.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
