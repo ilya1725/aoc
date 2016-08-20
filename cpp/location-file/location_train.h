@@ -1,3 +1,8 @@
+/**
+ * location_train.h
+ *
+ * Class declaration.
+ */
 #pragma once
 
 #include <vector>

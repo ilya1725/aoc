@@ -49,7 +49,11 @@ int main(int argc, char** argv)
 	}
 
 	// Verify the input values
-	VideoCapture cap(argv[1]); // open the passed video
+	//VideoCapture cap(argv[1]); // open the passed video
+
+	VideoCapture cap;
+	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('D', 'I', 'V', '4'));
+	cap.open(argv[1]);
 	
 	if (!cap.isOpened()) {		// check if we succeeded
 		cout << "\nCan not open video file '" << argv[1] << "'" << endl;

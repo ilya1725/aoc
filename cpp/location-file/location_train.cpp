@@ -1,4 +1,5 @@
 /**
+ * Implenetation of the location_train class.
  */
 #include "location_train.h"
 
@@ -11,6 +12,13 @@ location_train::~location_train()
 {
 }
 
+/**
+ * Load the location data file.
+ * The data is exppected in this format: 
+ * each line contains coordinates of one point in <X> <Y> format.
+ * The function will skip lines formatted incorrectly.
+ * The function will only read the first two numbers from a line that contains more.
+ */
 location_train::error_code 
 location_train::load(const string data_file) {
 	// Open the file and process the data points
@@ -59,9 +67,11 @@ location_train::load(const string data_file) {
 	return error_code::no_error;
 }
 
-// Verify that all location values are in the specied range
-// ul - upper left point's coordinates
-// lr - lower right point's coordinates
+/**
+ * Verify that all location values are in the specied range
+ * ul - upper left point's coordinates
+ * lr - lower right point's coordinates
+ */
 location_train::error_code
 location_train::verify(point_t ul, point_t lr) const {
 	if (!m_trace.size()) {
@@ -76,3 +86,4 @@ location_train::verify(point_t ul, point_t lr) const {
 
 	return error_code::no_error;
 }
+

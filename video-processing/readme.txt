@@ -20,6 +20,32 @@ Because this is a naïve approach to identifying objects,
 it will not be accurate (so false positives and false negatives will occur). 
 
 //-----------------------------------------------------------------------------
+	Algorithm:
+
+	1. Check the general validity of the data.
+		a. Make sure that all location values are within the video's size.
+			- This check may have to be adjusted if the scaling is different.
+		b. For this use-case, make sure that the number of location points is the same as the number of frames.
+			- This check will not be valid if there are gaps.
+		c. The data is smooth. I.e. the location of the object in the frame cannot change 
+		from the previous frames with high speed. Essentially the first derivative
+		of the location trace should be monotonically changing. If it isn't, then 
+		the location where this happents is/are the outliers.
+			This can be implemnted in different ways depending on the available HW.
+
+	2. For each frame:
+		a. Calculate average grayscale value. Using mean() [http://docs.opencv.org/3.0.0/d2/de8/group__core__array.html#ga191389f8a0e58180bb13a727782cd461]
+		b. Run the location algorithm using blob detector.
+			The low threthold of the detector should be set to the above mean value.
+			There could be many blobs.
+		c. Compare all the located blobs' location with the expected location from the data, 
+		within known precision value.
+			- If none match - print an error.
+			- If one matches, but there is more than one blob - print an error.
+		
+
+
+//-----------------------------------------------------------------------------
 https://stackoverflow.com/questions/4953843/why-cant-visual-studio-find-my-dll
 
 NOTES:
