@@ -41,6 +41,19 @@ static void help(char **argv)
 	cout << "usage: " << argv[0] << " <video file name> <location file name>\n" << endl;
 }
 
+/**
+ * Helper function to figure out if the specified location coordinates
+ * are within the specified point. The point is described by central
+ * coordinates and size.
+ */
+static bool inPoint(Point2f pt, float size, location_train::point_t location)
+{
+	auto dx = abs(location.x - pt.x);
+	auto dy = abs(location.y - pt.y);
+
+	return ((dx*dx + dy*dy) < size*size);
+}
+
 int main(int argc, char** argv)
 {
 	if (argc != 3) {
@@ -52,7 +65,14 @@ int main(int argc, char** argv)
 	//VideoCapture cap(argv[1]); // open the passed video
 
 	VideoCapture cap;
-	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('D', 'I', 'V', '4'));
+
+	// Futile attempt to try differetn codecs
+	//cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('D', 'I', 'V', '4'));
+	//cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('D', 'A', 'V', 'C'));
+	//cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('3', 'I', 'V', '2'));
+	//cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('3', 'I', 'V', 'X'));
+	//cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('A', 'V', 'C', '1'));
+	cap.set(CV_CAP_PROP_FOURCC, CV_FOURCC('H', '2', '6', '4'));
 	cap.open(argv[1]);
 	
 	if (!cap.isOpened()) {		// check if we succeeded
@@ -66,20 +86,70 @@ int main(int argc, char** argv)
 		cout << " fps    =" << cap.get(CV_CAP_PROP_FPS) << endl;
 	}
 
+	// Load the trail of locations
+	location_train locations;
 
-	Mat edges;
-	namedWindow("edges", 1);
-	//CvScalar cvAvg(const CvArr* arr,const CvArr* mask=NULL ) 
+	if (locations.load(argv[2]) != location_train::error_code::no_error) {
+		cout << "Cannot load the location file '" << argv[2] << "'" << endl;
+		return -1;
+	}
+
+	// do the simple sanity check
+	if (locations.getCount() != cap.get(CV_CAP_PROP_FRAME_COUNT)) {
+		cout << "Data points don't match." << endl;
+		cout << " n frames   =" << cap.get(CV_CAP_PROP_FRAME_COUNT) << endl;
+		cout << " n locations=" << locations.getCount() << endl;
+		return -1;
+	}
+
+	location_train::point_t ul{ 0,0 };
+	location_train::point_t lr{ (unsigned long)cap.get(CV_CAP_PROP_FRAME_WIDTH),(unsigned long)cap.get(CV_CAP_PROP_FRAME_HEIGHT) };
+
+	if (locations.verify(ul, lr) != location_train::error_code::no_error) {
+		cout << "Data points don't fit into video space." << endl;
+		return -1;
+	}
+
+	// Set up the detector with default parameters.
+	SimpleBlobDetector detector;
+
+	auto loc_index = 0;
+	auto fps = cap.get(CV_CAP_PROP_FPS);
+
+	// Process frame by frame
 	for (;;)
 	{
 		Mat frame;
-		cap >> frame; // get a new frame from camera
-		cvtColor(frame, edges, COLOR_BGR2GRAY);
-		GaussianBlur(edges, edges, Size(7, 7), 1.5, 1.5);
-		Canny(edges, edges, 0, 30, 3);
-		imshow("edges", edges);
-		if (waitKey(30) >= 0) break;
+		cap >> frame; // get a new frame from the file
+		double frame_time = loc_index / fps;
+
+		// Detect blobs.
+		std::vector<KeyPoint> keypoints;
+		detector.detect(frame, keypoints);
+		
+		// No need to check the range since we already verified that the number of locations
+		// is the same as the number of frames
+		auto location = locations[loc_index];
+		loc_index++;
+
+		if (keypoints.size() == 0) {
+			cout << "Error: No objects found at time: " << frame_time << endl;
+		}
+		bool located = false;
+		for ( auto key : keypoints ) {
+			// The found blob should be at least 3x3
+			if (key.size > 3) {
+				if (inPoint(key.pt, key.size, location)) {
+					located = true;
+					break;
+				}
+			}
+		}
+		if (!located) {
+			cout << "Error: No objects at time: " << frame_time << "located at expected position" << endl;
+		}
 	}
-	// the camera will be deinitialized automatically in VideoCapture destructor
+
+	// the video file will be deinitialized automatically in VideoCapture destructor
 	return 0;
 }

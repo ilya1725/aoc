@@ -41,12 +41,10 @@ it will not be accurate (so false positives and false negatives will occur).
 		c. Compare all the located blobs' location with the expected location from the data, 
 		within known precision value.
 			- If none match - print an error.
-			- If one matches, but there is more than one blob - print an error.
 		
 
 
 //-----------------------------------------------------------------------------
-https://stackoverflow.com/questions/4953843/why-cant-visual-studio-find-my-dll
 
 NOTES:
 

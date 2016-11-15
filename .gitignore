@@ -212,3 +212,5 @@ _Pvt_Extensions/
 ModelManifest.xml
 /buffer/buffer.VC.db
 /buffer/buffer.VC.VC.opendb
+/misc-coding/misc-coding.VC.db
+/video-processing/video-processing.VC.db

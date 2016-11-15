@@ -35,6 +35,8 @@ public:
 	error_code verify(point_t ul, point_t lr) const;
 
 	const size_t getCount() const { return m_trace.size(); };
+	const point_t& at(size_t pos) const { return m_trace.at(pos); };
+	const point_t& operator[](size_t pos) const { return m_trace[pos]; };
 
 private:
 
