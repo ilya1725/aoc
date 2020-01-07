@@ -1,4 +1,7 @@
-all:
+all:	doodles ex2 ex3 memgoble file-search path
+.PHONY : all
+
+doodles:
 	g++ -lstdc++ -pthread -std=c++14 -o doodles src/doodles.cpp src/MapCheck.cpp
 
 ex2:
