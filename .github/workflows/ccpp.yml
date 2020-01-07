@@ -9,7 +9,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: configure
-      run: ./configure
-    - name: make Doodles
+    #- name: configure
+    #  run: ./configure
+    - name: make All doodles
       run: cd ./doodles && make all
