@@ -2,22 +2,22 @@ all:	doodles ex2 ex3 memgoble file-search path
 .PHONY : all
 
 doodles:
-	g++ -lstdc++ -pthread -std=c++14 -o doodles src/doodles.cpp src/MapCheck.cpp
+	g++ -lstdc++ -pthread -std=c++17 -o doodles src/doodles.cpp src/MapCheck.cpp
 
 ex2:
-	g++ -O3 -Wall -Wconversion -lstdc++ -pthread -std=c++14 -o ex2 src/ex2.cpp
+	g++ -O3 -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o ex2 src/ex2.cpp
 
 ex3:
-	g++ -O0 -Wall -Wconversion -lstdc++ -pthread -std=c++14 -o ex3 src/ex3.cpp
+	g++ -O0 -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o ex3 src/ex3.cpp
 
 memgoble:
-	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++14 -o memgoble src/memgoble.cpp
+	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o memgoble src/memgoble.cpp
 
 file-search:
-	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++14 -o file-search src/file-search.cpp
+	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o file-search src/file-search.cpp
 
 path:
-	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++14 -o obstacle-path src/obstacle-path.cpp
+	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o obstacle-path src/obstacle-path.cpp
 
 clean:
 	rm -f memgoble
