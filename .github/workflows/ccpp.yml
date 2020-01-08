@@ -9,6 +9,7 @@ on:
 
 jobs:
   build_doodles:
+    name: Build C++ doodles
 
     runs-on: ubuntu-latest
     
@@ -21,6 +22,7 @@ jobs:
       run: make all
       
   build_encircular:
+    name: Build and test encircular algorithm
 
     runs-on: ubuntu-latest
     
@@ -42,4 +44,29 @@ jobs:
       working-directory: ./Encircular
     - name: Test Encircular
       working-directory: ./Encircular
+      run: make test
+
+  build_inst:
+    name: Building message parcer
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: build message parcer
+      working-directory: ./inst
+      run: make msg_parser
+
+  build_routing:
+    name: Build & test EV routing challenge
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: build routing
+      working-directory: ./EV-routing-challenge
+      run: make solution
+    - name: test routing
+      working-directory: ./EV-routing-challenge
       run: make test
