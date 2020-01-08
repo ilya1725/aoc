@@ -1,6 +1,11 @@
 name: C/C++ CI
 
-on: [push]
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master         # Push events on master branch
+      - ilya1725-Encircular-cleanup
 
 jobs:
   build:
