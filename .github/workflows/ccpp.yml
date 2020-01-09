@@ -9,7 +9,7 @@ on:
 
 jobs:
   build_doodles:
-    name: Build C++ doodles
+    name: Build & test C++ doodles
 
     runs-on: ubuntu-latest
     
@@ -20,6 +20,10 @@ jobs:
     - name: make All doodles
       working-directory: ./doodles
       run: make all
+    - name: Test obstacle path
+      working-directory: ./doodles
+      if: success()
+      run: ./obstacle-path
       
   build_encircular:
     name: Build and test encircular algorithm
