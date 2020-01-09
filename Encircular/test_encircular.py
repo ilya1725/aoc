@@ -91,7 +91,7 @@ def main():
         process = Popen([options.encircular_exe, run], stdout=PIPE, universal_newlines=True)
         for stdout_line in iter(process.stdout.readline, ""):
             if (len(stdout_line) > 0):
-                print ("%s" % stdout_line)
+                print ("%s" % stdout_line, end='')
         process.stdout.close()
         exit_code = process.wait()
         
