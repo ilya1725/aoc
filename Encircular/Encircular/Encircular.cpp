@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 		string route = argv[1];
 		point start;
 		double max_distance = 0.0;
-		int nupdate_cnt = 0;			// how many times, concecutevly, the max wasn't updated
+		int nupdate_cnt = 0;			// how many times, consecutively, the max wasn't updated
 		bool sim_result = false;
 		bool anl_result = false;
 
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 
 		// Run the analyzer
 		anl_result = analyze(route, point());
-		cout << "Analisis: " << (anl_result ? "YES" : "NO") << endl;
+		cout << "Analysis: " << (anl_result ? "YES" : "NO") << endl;
 
 		if (anl_result != sim_result) {
 			cout << "ERROR: results disagree." << endl;
