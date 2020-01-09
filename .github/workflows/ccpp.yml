@@ -58,7 +58,7 @@ jobs:
       run: make msg_parser
     - name: test
       working-directory: ./inst
-      run: 
+      run: |
         msg_parser < 3_packets
         msg_parser < 2_packets
         msg_parser < 200_packets
