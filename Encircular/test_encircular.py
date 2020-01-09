@@ -88,10 +88,14 @@ def main():
     # Do the run
     i = 0
     for run in test_runs:
-        process = Popen([options.encircular_exe, run], stdout=PIPE)
-        (output, err) = process.communicate()
+        process = Popen([options.encircular_exe, run], stdout=PIPE, universal_newlines=True)
+        for stdout_line in iter(process.stdout.readline, ""):
+            if (len(stdout_line) > 0):
+                print ("%s" % stdout_line)
+        process.stdout.close()
         exit_code = process.wait()
-        print (" %5d: %s %s\n%s" % (++i, exit_code, run, output))
+        
+        print (" %5d: %s %s" % (++i, exit_code, run))
         
     # Plot
     if (options.plot):
