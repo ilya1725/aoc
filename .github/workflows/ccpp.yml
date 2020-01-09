@@ -59,11 +59,10 @@ jobs:
     - name: test
       working-directory: ./inst
       run: |
-        ls -al
-        msg_parser < 3_packets
-        msg_parser < 2_packets
-        msg_parser < 200_packets
-        msg_parser < 10_short_packets
+        ./msg_parser < 3_packets
+        ./msg_parser < 2_packets
+        ./msg_parser < 200_packets
+        ./msg_parser < 10_short_packets
 
   build_routing:
     name: Build & test EV routing challenge
