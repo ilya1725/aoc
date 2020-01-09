@@ -3,7 +3,7 @@
 // Author      : Ilya Katsnelson
 // Version     :
 // Copyright   : free to use
-// Description : The application will search directory for a file pattern
+// Description : The application implements Dijkstra algorithm
 //============================================================================
 
 #include <algorithm>
