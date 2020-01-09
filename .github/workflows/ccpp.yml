@@ -47,15 +47,22 @@ jobs:
       run: make test
 
   build_inst:
-    name: Building message parcer
+    name: Building & testing message parser
 
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v2
-    - name: build message parcer
+    - name: build
       working-directory: ./inst
       run: make msg_parser
+    - name: test
+      working-directory: ./inst
+      run: 
+        msg_parser < 3_packets
+        msg_parser < 2_packets
+        msg_parser < 200_packets
+        msg_parser < 10_short_packets
 
   build_routing:
     name: Build & test EV routing challenge
@@ -67,6 +74,6 @@ jobs:
     - name: build routing
       working-directory: ./EV-routing-challenge
       run: make solution
-    - name: test routing
+    - name: build test
       working-directory: ./EV-routing-challenge
       run: make test
