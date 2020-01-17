@@ -81,3 +81,8 @@ jobs:
     - name: build test
       working-directory: ./EV-routing-challenge
       run: make test
+    - name: test using checker
+      working-directory: ./EV-routing-challenge
+      run: |
+        ./test
+
