@@ -86,3 +86,17 @@ jobs:
       run: |
         ./test
 
+  build_gtest:
+    name: Build & test different GTest examples
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: build routing
+      working-directory: ./gtest
+      run: make template_test
+    - name: run test
+      working-directory: ./EV-routing-challenge
+      run: GTEST_COLOR=1 ctest -V
+
