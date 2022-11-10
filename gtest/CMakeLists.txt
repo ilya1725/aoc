@@ -7,6 +7,9 @@ enable_testing()
 add_executable(template_test template_test.cpp)
 target_link_libraries(template_test PUBLIC gtest gmock gtest_main)
 
+add_test(NAME template_test
+    COMMAND template_test --gtest_output=xml:test_results.xml)
+
 target_include_directories(template_test
     PUBLIC
         $<INSTALL_INTERFACE:include>
