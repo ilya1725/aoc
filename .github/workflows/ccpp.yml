@@ -100,6 +100,6 @@ jobs:
       working-directory: ./
       run: cmake --build ./build/ --target template_test
     - name: run test
-      working-directory: ./EV-routing-challenge
+      working-directory: ./build
       run: GTEST_COLOR=1 ctest -V
 
