@@ -6,298 +6,312 @@ import sys
 import copy
 import math
 
-data1 = [
-"noop",
-"noop",
-"noop",
-"addx 4",
-"addx 3",
-"addx 3",
-"addx 3",
-"noop",
-"addx 2",
-"addx 1",
-"addx -7",
-"addx 10",
-"addx 1",
-"addx 5",
-"addx -3",
-"addx -7",
-"addx 13",
-"addx 5",
-"addx 2",
-"addx 1",
-"addx -30",
-"addx -8",
-"noop",
-"addx 3",
-"addx 2",
-"addx 7",
-"noop",
-"addx -2",
-"addx 5",
-"addx 2",
-"addx -7",
-"addx 8",
-"addx 2",
-"addx 5",
-"addx 2",
-"addx -12",
-"noop",
-"addx 17",
-"addx 3",
-"addx -2",
-"addx 2",
-"noop",
-"addx 3",
-"addx -38",
-"noop",
-"addx 3",
-"addx 4",
-"noop",
-"addx 5",
-"noop",
-"noop",
-"noop",
-"addx 1",
-"addx 2",
-"addx 5",
-"addx 2",
-"addx -3",
-"addx 4",
-"addx 2",
-"noop",
-"noop",
-"addx 7",
-"addx -30",
-"addx 31",
-"addx 4",
-"noop",
-"addx -24",
-"addx -12",
-"addx 1",
-"addx 5",
-"addx 5",
-"noop",
-"noop",
-"noop",
-"addx -12",
-"addx 13",
-"addx 4",
-"noop",
-"addx 23",
-"addx -19",
-"addx 1",
-"addx 5",
-"addx 12",
-"addx -28",
-"addx 19",
-"noop",
-"addx 3",
-"addx 2",
-"addx 5",
-"addx -40",
-"addx 4",
-"addx 32",
-"addx -31",
-"noop",
-"addx 13",
-"addx -8",
-"addx 5",
-"addx 2",
-"addx 5",
-"noop",
-"noop",
-"noop",
-"addx 2",
-"addx -7",
-"addx 8",
-"addx -7",
-"addx 14",
-"addx 3",
-"addx -2",
-"addx 2",
-"addx 5",
-"addx -40",
-"noop",
-"noop",
-"addx 3",
-"addx 4",
-"addx 1",
-"noop",
-"addx 2",
-"addx 5",
-"addx 2",
-"addx 21",
-"noop",
-"addx -16",
-"addx 3",
-"noop",
-"addx 2",
-"noop",
-"addx 1",
-"noop",
-"noop",
-"addx 4",
-"addx 5",
-"noop",
-"noop",
-"noop",
-"noop",
-"noop",
-"noop",
-"noop"
-]
+class Base():
+    const1 = (23*13*19*17)
+    const2 = (17*3*19*7*2*5*11*13)
 
-data2 = [
-"addx 15",
-"addx -11",
-"addx 6",
-"addx -3",
-"addx 5",
-"addx -1",
-"addx -8",
-"addx 13",
-"addx 4",
-"noop",
-"addx -1",
-"addx 5",
-"addx -1",
-"addx 5",
-"addx -1",
-"addx 5",
-"addx -1",
-"addx 5",
-"addx -1",
-"addx -35",
-"addx 1",
-"addx 24",
-"addx -19",
-"addx 1",
-"addx 16",
-"addx -11",
-"noop",
-"noop",
-"addx 21",
-"addx -15",
-"noop",
-"noop",
-"addx -3",
-"addx 9",
-"addx 1",
-"addx -3",
-"addx 8",
-"addx 1",
-"addx 5",
-"noop",
-"noop",
-"noop",
-"noop",
-"noop",
-"addx -36",
-"noop",
-"addx 1",
-"addx 7",
-"noop",
-"noop",
-"noop",
-"addx 2",
-"addx 6",
-"noop",
-"noop",
-"noop",
-"noop",
-"noop",
-"addx 1",
-"noop",
-"noop",
-"addx 7",
-"addx 1",
-"noop",
-"addx -13",
-"addx 13",
-"addx 7",
-"noop",
-"addx 1",
-"addx -33",
-"noop",
-"noop",
-"noop",
-"addx 2",
-"noop",
-"noop",
-"noop",
-"addx 8",
-"noop",
-"addx -1",
-"addx 2",
-"addx 1",
-"noop",
-"addx 17",
-"addx -9",
-"addx 1",
-"addx 1",
-"addx -3",
-"addx 11",
-"noop",
-"noop",
-"addx 1",
-"noop",
-"addx 1",
-"noop",
-"noop",
-"addx -13",
-"addx -19",
-"addx 1",
-"addx 3",
-"addx 26",
-"addx -30",
-"addx 12",
-"addx -1",
-"addx 3",
-"addx 1",
-"noop",
-"noop",
-"noop",
-"addx -9",
-"addx 18",
-"addx 1",
-"addx 2",
-"noop",
-"noop",
-"addx 9",
-"noop",
-"noop",
-"noop",
-"addx -1",
-"addx 2",
-"addx -37",
-"addx 1",
-"addx 3",
-"noop",
-"addx 15",
-"addx -21",
-"addx 22",
-"addx -6",
-"addx 1",
-"noop",
-"addx 2",
-"addx 1",
-"noop",
-"addx -10",
-"noop",
-"noop",
-"addx 20",
-"addx 1",
-"addx 2",
-"addx 2",
-"addx -6",
-"addx -11",
-"noop",
-"noop",
-"noop"
-]
+    def __init__(self, init_list):
+        self.list = init_list
+        self.inspected = 0
 
+    def Append(self, value):
+        self.list.append(value)
+
+    def Inspected(self):
+        return self.inspected
+
+# -----------------------------------------------------------------------------
+class Monkey0(Base):
+
+    def __init__(self):
+        Base.__init__(self,[79, 98])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item * 19
+            # new = int(new/3)
+            new = new % Base.const1
+
+            if (new % 23) == 0:
+                destination = 2
+            else:
+                destination = 3
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class Monkey1(Base):
+    def __init__(self):
+        Base.__init__(self, [54, 65, 75, 74])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 6
+            # new = int(new/3)
+            new = new % Base.const1
+
+            if (new % 19) == 0:
+                destination = 2
+            else:
+                destination = 0
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class Monkey2(Base):
+    def __init__(self):
+        Base.__init__(self, [79, 60, 97])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item * item
+            # new = int(new/3)
+            new = new % Base.const1
+
+            if (new % 13) == 0:
+                destination = 1
+            else:
+                destination = 3
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class Monkey3(Base):
+    def __init__(self):
+        Base.__init__(self, [74])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 3
+            # new = int(new/3)
+            new = new % Base.const1
+
+            if (new % 17) == 0:
+                destination = 0
+            else:
+                destination = 1
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+# -----------------------------------------------------------------------------
+class BMonkey0(Base):
+    def __init__(self):
+        Base.__init__(self,[72, 64, 51, 57, 93, 97, 68])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item * 19
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 17) == 0:
+                destination = 4
+            else:
+                destination = 7
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey1(Base):
+    def __init__(self):
+        Base.__init__(self,[62])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item * 11
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 3) == 0:
+                destination = 3
+            else:
+                destination = 2
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey2(Base):
+    def __init__(self):
+        Base.__init__(self,[57, 94, 69, 79, 72])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 6
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 19) == 0:
+                destination = 0
+            else:
+                destination = 4
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey3(Base):
+    def __init__(self):
+        Base.__init__(self,[80, 64, 92, 93, 64, 56])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 5
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 7) == 0:
+                destination = 2
+            else:
+                destination = 0
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey4(Base):
+    def __init__(self):
+        Base.__init__(self,[70, 88, 95, 99, 78, 72, 65, 94])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 7
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 2) == 0:
+                destination = 7
+            else:
+                destination = 5
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey5(Base):
+    def __init__(self):
+        Base.__init__(self,[57, 95, 81, 61])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item * item
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 5) == 0:
+                destination = 1
+            else:
+                destination = 6
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey6(Base):
+    def __init__(self):
+        Base.__init__(self,[79, 99])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 2
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 11) == 0:
+                destination = 3
+            else:
+                destination = 1
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+class BMonkey7(Base):
+    def __init__(self):
+        Base.__init__(self,[68, 98, 62])
+
+    def Process(self):
+        # process the current list and return the values and destinations
+        # return - list of destination,value pairs
+        result = []
+        for item in self.list:
+            new = item + 3
+            # new = int(new/3)
+            new = new % Base.const2
+
+            if (new % 13) == 0:
+                destination = 5
+            else:
+                destination = 6
+
+            result.append([destination, new])
+            self.inspected += 1
+
+        self.list.clear()
+        return result
+
+# -----------------------------------------------------------------------------
 def main():
 
     count = 0
@@ -306,96 +320,39 @@ def main():
 
     # round 1
     if 0:
-        data = data1
+        data = [Monkey0(), Monkey1(), Monkey2(), Monkey3()]
+        # data = [BMonkey0(), BMonkey1(), BMonkey2(), BMonkey3(), BMonkey4(), BMonkey5(), BMonkey6(), BMonkey7()]
 
-        clock = []
-        next_value = 1
-        cycle = 19
-        cycle_step = 40
-        cycle_cnt = 0
-        output1 = 0
+        for count in range(20):
+            for d in data:
+                result = d.Process()
 
-        for cmd in data:
-            split = cmd.split()
-            if split[0] == 'noop':
-                clock.append(next_value)
-            else:
-                clock.append(next_value)
-                clock.append(next_value)
-                next_value = clock[-1] + int(split[1])
-            # print(f"{cmd}:{len(clock)} - {clock[-10:]}")
+                for r in result:
+                    # destination,value
+                    data[r[0]].Append(r[1])
 
-            result = 0
-            if len(clock) == (cycle + cycle_step*cycle_cnt):
-                result = (len(clock)+1) * next_value
-                print(f"S:{len(clock)}:{next_value} {result}")
-                output1 += result
-                cycle_cnt += 1
-            elif (len(clock) - 1) == (cycle + cycle_step*cycle_cnt):
-                result = len(clock) * clock[-1]
-                print(f"F:{len(clock)-1}:{clock[-1]} {result}")
-                output1 += result
-                cycle_cnt += 1
+            print(f"{count}")
+            for d in data:
+                print(f"{d.Inspected()}:{d.list}")
 
 
     # round 2
     if 1:
-        data = data1
+        # data = [Monkey0(), Monkey1(), Monkey2(), Monkey3()]
+        data = [BMonkey0(), BMonkey1(), BMonkey2(), BMonkey3(), BMonkey4(), BMonkey5(), BMonkey6(), BMonkey7()]
 
-        clock = []
-        next_value = 1
-        cycle = 19
-        cycle_step = 40
-        cycle_cnt = 0
-        output1 = 0
-        output_map = [['.' for i in range(cycle_step)] for i in range(cycle_step)]
+        for count in range(1, 10001):
+            for d in data:
+                result = d.Process()
 
-        for cmd in data:
-            split = cmd.split()
-            if split[0] == 'noop':
-                clock.append(next_value)
-            else:
-                clock.append(next_value)
-                clock.append(next_value)
-                next_value = clock[-1] + int(split[1])
-            print(f"{cmd}:{len(clock)} - {clock[-10:]}")
+                for r in result:
+                    # destination,value
+                    data[r[0]].Append(r[1])
 
-            size = len(clock)
-            pixel = (size % cycle_step) - 1
-            if pixel == 0:
-                pixel_min = 0
-            else:
-                pixel_min = pixel - 1
-            if pixel == (cycle_step-1):
-                pixel_max = cycle_step-1
-            else:
-                pixel_max = pixel + 1
-
-            if pixel_min <= clock[-1] and clock[-1] <= pixel_max:
-                output_map[int(size / cycle_step)][pixel] = '#'
-                print(f"S:{pixel}:{clock[-1]}:{output_map[int(size / cycle_step)]}")
-
-            if split[0] != 'noop':
-                # two cycles
-                size = len(clock) - 1
-                pixel = (size % cycle_step) - 1
-                if pixel == 0:
-                    pixel_min = 0
-                else:
-                    pixel_min = pixel - 1
-                if pixel == (cycle_step-1):
-                    pixel_max = cycle_step-1
-                else:
-                    pixel_max = pixel + 1
-
-                if pixel_min <= clock[-2] and clock[-2] <= pixel_max:
-                    output_map[int(size / cycle_step)][pixel] = '#'
-                    print(f"F:{pixel}:{clock[-2]}:{output_map[int(size / cycle_step)]}")
-
-        for line in output_map:
-            for l in line:
-                print(f"{l}", end='')
-            print("")
+            if (count % 1000) == 0:
+                print(f"{count}")
+                for d in data:
+                    print(f"{d.Inspected()}:{len(d.list)}")
 
 
     print(f"E: {count}:{output1}:{output2}")
