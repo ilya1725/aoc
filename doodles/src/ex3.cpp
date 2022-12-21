@@ -1,7 +1,11 @@
+//
+//
+//
+
 #include "ex3.h"
 
 Manager::Manager() {
-    faults_ = std::make_unique<DataReader>(kActuatorsCommand, kActuatorsProxy);
+    faults_ = std::make_unique<DataReader>("test" ,kActuatorsCommand, kActuatorsProxy);
 }
 
 Manager::~Manager() {

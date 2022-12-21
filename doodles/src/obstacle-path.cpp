@@ -81,7 +81,7 @@ path(std::vector<std::vector<int>> & map) {
                 }
             }
         }
-        if (p.x < map[0].size()-1) {
+        if (p.x < static_cast<int>(map[0].size()-1)) {
             if (map[p.x+1][p.y] != 0) {
                 if (!visited[p.x+1][p.y]) {
                     elements.push({p.x+1,p.y});
@@ -101,7 +101,7 @@ path(std::vector<std::vector<int>> & map) {
                 }
             }
         }
-        if (p.y < map.size()-1) {
+        if (p.y < static_cast<int>(map.size()-1)) {
             if (map[p.x][p.y+1] != 0) {
                 if (!visited[p.x][p.y+1]) {
                     elements.push({p.x,p.y+1});
