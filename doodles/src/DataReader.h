@@ -4,6 +4,8 @@
 
 // #include "StatisticsData.h"
 
+#include <string>
+
 class DataReader {
  public:
 
