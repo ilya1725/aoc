@@ -13,35 +13,43 @@
 
 // ------------------------------------------------------------------------- //
 // Convert degrees to radians
-double route::deg2rad(const double deg) {
+template <size_t size>
+double constexpr route<size>::deg2rad(const double deg) {
     return (deg * M_PI / 180.0);
 }
 
 // Calculate the distance on the spherical earth between two points.
 // Lifted from: https://en.wikipedia.org/wiki/Great-circle_distance#Formulae
-double route::calculate_station_distance(const row & a, const row & b) {
+template <size_t size>
+double route<size>::calculate_station_distance(const row & a, const row & b) {
     // calculate the central angle
-    const double delta_lambda = deg2rad(std::abs(a.lon - b.lon));
-    double delta_sigma = std::acos(std::sin(deg2rad(a.lat))*std::sin(deg2rad(b.lat)) +
-                                    std::cos(deg2rad(a.lat))*std::cos(deg2rad(b.lat))*std::cos(delta_lambda));
+    const double delta_lambda{deg2rad(std::abs(a.lon - b.lon))};
+    const double delta_sigma{std::acos(std::sin(deg2rad(a.lat))*std::sin(deg2rad(b.lat)) +
+                              std::cos(deg2rad(a.lat))*std::cos(deg2rad(b.lat))*std::cos(delta_lambda))};
 
     //std::cout << a.name << ":" << a.lat << ":" << a.lon << "|"
-    //        << b.name << ":" << b.lat << ":" << b.lon << "|" << (delta_sigma * route::m_earth_radius) << std::endl;
+    //          << b.name << ":" << b.lat << ":" << b.lon << "|" << (delta_sigma * route::m_earth_radius) << std::endl;
     return (delta_sigma * route::m_earth_radius);
 }
 
 // Utility function to return station distance in hours driven at max speed
-double route::calculate_station_time(const row & a, const row & b) {
+template <size_t size>
+double route<size>::calculate_station_time(const row & a, const row & b) {
     return (calculate_station_distance(a, b) / m_max_speed);
 }
 
 // Add one more point to the route
-void route::add_point(const std::array<row, 303>::size_type point_id, const double charge_time, const double distance, const double initial_charge) {
+template <size_t size>
+void route<size>::add_point(const typename std::array<row, size>::size_type point_id,
+                        const double charge_time,
+                        const double distance,
+                        const double initial_charge) {
     m_points.push_back({point_id, charge_time, distance, initial_charge});
 }
 
 // Calculate the full route time from beginning to end
-const double route::get_full_route_time() {
+template <size_t size>
+const double route<size>::get_full_route_time() {
     auto previous_point = m_start;
     m_route_time = 0.0;
     for (auto & point : m_points) {
@@ -56,7 +64,8 @@ const double route::get_full_route_time() {
 }
 
 // Remove all points from the route
-void route::clear() {
+template <size_t size>
+void route<size>::clear() {
     m_route_time = 0.0;
     m_points.clear();
 }
@@ -65,7 +74,8 @@ void route::clear() {
 // i.e. shortest time spend traveling with highest charging rate.
 // Try the direct route first from the current station.
 // The criterion to be closer to the finish point to avoid loops.
-int route::find_fastest2full() {
+template <size_t size>
+int route<size>::find_fastest2full() {
 
     auto current_point = m_start;
     bool done_flag = false;
@@ -94,7 +104,7 @@ int route::find_fastest2full() {
         double fastest_solution = std::numeric_limits<double>::max();   // goodness factor to use to find the best solution
         double fastest_charge_time = 0.0;
         double fastest_distance = 0.0;
-        std::array<row, 303>::size_type fastest_id;
+        typename std::array<row, size>::size_type fastest_id;
 
         for (auto i = 0; i < network.size(); i++) {
             // Skip the obvious
@@ -150,7 +160,8 @@ int route::find_fastest2full() {
 // i.e. shortest time spend traveling.
 // Try the direct route first from the current station.
 // The criterion to be closer to the finish point to avoid loops.
-int route::find_shortest() {
+template <size_t size>
+int route<size>::find_shortest() {
 
     auto current_point = m_start;
     bool done_flag = false;
@@ -178,7 +189,7 @@ int route::find_shortest() {
         auto fastest = m_start;
         double fastest_distance = std::numeric_limits<double>::max();
         double fastest_solution = std::numeric_limits<double>::max();   // Goodness factor to use to find solution
-        std::array<row, 303>::size_type fastest_id;
+        typename std::array<row, size>::size_type fastest_id;
 
         for (auto i = 0; i < network.size(); i++) {
             // Skip the obvious
@@ -229,7 +240,8 @@ int route::find_shortest() {
 // Find the route using simple random selection.
 // Sometimes this can be surprisingly effective for little effort. 'Can' is the keyword.
 // Try the direct route first from the current station
-int route::find_random() {
+template <size_t size>
+int route<size>::find_random() {
     auto current_point = m_start;
     bool done_flag = false;
 
@@ -245,7 +257,7 @@ int route::find_random() {
         }
 
         // Pick another point at random
-        std::array<row, 303>::size_type random_id = std::rand() % network.size();
+        typename std::array<row, size>::size_type random_id = std::rand() % network.size();
 
         // Skip the obvious
         if (random_id == m_start || random_id == m_finish || random_id == current_point) {
@@ -272,13 +284,14 @@ int route::find_random() {
 }
 
 // Use the common Dijkstra's algorithm to find the most optimal path
-int route::find_dijkstra() {
+template <size_t size>
+int route<size>::find_dijkstra() {
 
     std::priority_queue<node> min_queue;
-    std::vector<std::array<row, 303>::size_type> previous_id(network.size());
+    std::vector<typename std::array<row, size>::size_type> previous_id(network.size());
 
     // Initialize the min priority queue data structure
-    for (std::array<row, 303>::size_type i = 0; i < network.size(); i++) {
+    for (typename std::array<row, size>::size_type i = 0; i < network.size(); i++) {
         if (i == m_start) {
             min_queue.push({i, 0.0});
         } else {
@@ -308,8 +321,8 @@ int route::find_dijkstra() {
             const auto distance = calculate_station_distance(network[min_node.id], network[child_node.id]);
 
             // We will use time as the figure of merit of a link.
-            const auto value = distance/m_max_speed + distance/network[child_node.id].rate;
-            const auto tot_value = value + min_node.value;
+            const auto value{distance/m_max_speed + distance/network[child_node.id].rate};
+            const auto tot_value{value + min_node.value};
             if (distance < m_max_charge && tot_value < child_node.value) {
                 child_node.value = tot_value;
                 previous_id[child_node.id] = min_node.id;
@@ -350,13 +363,4 @@ int route::find_dijkstra() {
     return 0;
 }
 
-// Nicely and correctly print the route
-std::ostream& operator<<(std::ostream &strm, const route &a) {
-    strm << network[a.m_start].name << ", ";
-
-    for (auto & p : a.m_points) {
-        strm << network[p.id].name << ", "
-             << p.charge_time << ", ";
-    }
-    return strm << network[a.m_finish].name;
-}
+template class route<303>;

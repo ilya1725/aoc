@@ -13,7 +13,7 @@
 #include "network.h"
 #include "route.h"
 
-const double initial_charge = 320;  // in km that the vehicle can travel
+const double initial_charge{320};   // in km that the vehicle can travel
 
 int main(int argc, char** argv)
 {
@@ -56,9 +56,9 @@ int main(int argc, char** argv)
     }
 
     // Find the route
-    route potential_route{static_cast<std::array<row, 303>::size_type>(found_initial),
-                            static_cast<std::array<row, 303>::size_type>(found_goal),
-                            initial_charge};
+    route<303> potential_route{static_cast<std::array<row, 303>::size_type>(found_initial),
+                                static_cast<std::array<row, 303>::size_type>(found_goal),
+                                initial_charge};
     if (potential_route.find_dijkstra() < 0) {
         std::cout << "Algorithm didn't converge!" << std::endl;
         return -1;

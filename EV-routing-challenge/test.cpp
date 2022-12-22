@@ -57,10 +57,9 @@ int main(int argc, char** argv)
                 continue;
             }
 
-            std::string command = "./solution " + start.name + " " + finish.name;
-
-            // replace ' in the name with \' to work in the shell
-            command = std::regex_replace(command, std::regex("\'"), "\\'");
+            std::string command = "./solution " + start.name + " " + finish.name +
+                                " | xargs -I{} " +
+                                "./checker_linux {}";
             std::cout << command << std::endl;
             std::string output{};
             try {
@@ -69,25 +68,17 @@ int main(int argc, char** argv)
                 std::cerr << exc.what();
                 break;
             }
-            //std::cout << output << std::endl;
+            std::cout << output << std::endl;
+
             test_count++;
             if (output.find(not_converge) == std::string::npos) {
                 converge_count++;
             }
 
-            command = "./checker_linux \"" + output + "\"";
-            //std::cout << command << std::endl;
-            try {
-                output = exec(command.c_str());
-            } catch (const std::exception &exc) {
-                std::cerr << exc.what();
-                break;
-            }
-            std::cout << output << std::endl;
-
             if (output.find("Error") != std::string::npos) {
                 error_count++;
             }
+
             // Locate the cost strings
             try {
                 std::smatch m;
