@@ -1,4 +1,4 @@
-all:	doodles ex2 ex3 memgoble file-search path
+all:	doodles ex2 ex3 memgoble file-search path array
 .PHONY : all
 
 doodles:
@@ -25,10 +25,16 @@ path:
 	@echo "Building $@: "
 	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o obstacle-path src/obstacle-path.cpp
 
+array:
+	@echo "Building $@: "
+	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o array_size src/array_size.cpp
+
 clean:
+	rm -f *.o
 	rm -f memgoble
 	rm -f ex2
 	rm -f ex3
 	rm -f doodles
 	rm -f file-search
 	rm -f obstacle-path
+	rm -f array_size
