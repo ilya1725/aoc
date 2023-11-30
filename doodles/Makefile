@@ -29,6 +29,10 @@ array:
 	@echo "Building $@: "
 	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o array_size src/array_size.cpp
 
+undefined:
+	@echo "Building $@: "
+	g++ -Wall -Wconversion -lstdc++ -pthread -std=c++17 -o undefined src/undefined.cpp
+
 clean:
 	rm -f *.o
 	rm -f memgoble
@@ -38,3 +42,4 @@ clean:
 	rm -f file-search
 	rm -f obstacle-path
 	rm -f array_size
+	rm -f undefined
