@@ -19,7 +19,7 @@ class Booth
   private:
 };
 
-int function(const std::array<int, 42> & data) {
+constexpr int function(const std::array<int, 42> data) {
     std::bitset<data.size()> bit_set{};
 
     return 0;
