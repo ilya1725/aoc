@@ -11,7 +11,7 @@ class Booth
 {
   public:
     int function(const std::array<T, N> & data) {
-        std::bitset<data.size()> bit_set{};
+        std::bitset<N> bit_set{};
 
         return 0;
     };
@@ -19,8 +19,9 @@ class Booth
   private:
 };
 
-constexpr int function(const std::array<int, 42> data) {
-    std::bitset<data.size()> bit_set{};
+template <class T, std::size_t N>
+constexpr int function(const std::array<T, N> & data) {
+    std::bitset<N> bit_set{};
 
     return 0;
 }
