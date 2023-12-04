@@ -182,9 +182,8 @@ namespace part_one {
                     }
                     if (near_gear) {
                         for (const auto gear_coord : gear_locations) {
-                            auto gear_string = gears[gear_coord];
-                            gear_string.emplace_back(value);
-                            gears[gear_coord] = gear_string;
+                            auto & gear_string = gears[gear_coord];
+                            gear_string.push_back(value);
                         }
                     }
                     value = 0;
@@ -250,9 +249,8 @@ namespace part_one {
                 if (i == (line.length() - 1)) {
                     if (near_gear) {
                         for (const auto gear_coord : gear_locations) {
-                            auto gear_string = gears[gear_coord];
-                            gear_string.emplace_back(value);
-                            gears[gear_coord] = gear_string;
+                            auto & gear_string = gears[gear_coord];
+                            gear_string.push_back(value);
                         }
                     }
                 }
