@@ -75,7 +75,12 @@
             "thread": "cpp",
             "cinttypes": "cpp",
             "typeinfo": "cpp",
-            "variant": "cpp"
+            "variant": "cpp",
+            "ranges": "cpp"
         }
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": []
     }
 }
