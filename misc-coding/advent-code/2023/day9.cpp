@@ -100,22 +100,9 @@ namespace ex {
 }
 
 namespace part_one {
-
-    std::unordered_map<std::string, std::pair<std::string, std::string>> convert_map(const std::vector<std::string> & input) {
-        std::unordered_map<std::string, std::pair<std::string, std::string>> output{};
-
-        for (const auto & line : input) {
-            const auto line_split{util::split(line, ' ', true, std::vector<std::string>())};
-            const std::string left(line_split[2].begin() + 1, line_split[2].end() - 1);
-            const std::string right(line_split[3].begin(), line_split[3].end() - 1);
-            output.emplace(std::make_pair(line_split[0], std::make_pair(left, right)));
-        }
-        return output;
-    }
 }
 
 namespace part_two {
-
 }
 
 int main(int argc, char *argv[]) {
