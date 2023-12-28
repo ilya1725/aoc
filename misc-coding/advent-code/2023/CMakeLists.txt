@@ -11,4 +11,5 @@ add_executable(${year-prefix}-day8 day8.cpp)
 add_executable(${year-prefix}-day9 day9.cpp)
 add_executable(${year-prefix}-day10 day10.cpp)
 add_executable(${year-prefix}-day11 day11.cpp)
+add_executable(${year-prefix}-day12 day12.cpp)
 
