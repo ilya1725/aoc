@@ -323,7 +323,6 @@ int main(int argc, char *argv[]) {
             }
             idx++;
             time_measure.sample(13);
-
         }
 
         std::cout << "T1:" << result << std::endl;

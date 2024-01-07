@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/misc-coding/advent-code/2023/2023-day13",
+            "program": "${workspaceFolder}/build/misc-coding/advent-code/2023/2023-day14",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
