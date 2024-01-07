@@ -10,6 +10,6 @@ add_subdirectory(cmake EXCLUDE_FROM_ALL)
 
 enable_testing()
 
-add_subdirectory(tlgr)
-add_subdirectory(gtest)
-add_subdirectory(misc-coding)
+add_subdirectory(2022)
+add_subdirectory(2023)
+
