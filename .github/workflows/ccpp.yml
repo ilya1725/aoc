@@ -1,0 +1,105 @@
+name: C/C++ CI
+
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      - master         # Push events on master branch
+      - '*'            # Matches all branch and tag names that don't contain a slash (/). 
+
+jobs:
+  build_doodles:
+    name: Build & test C++ doodles
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    #- name: configure
+    #  run: ./configure
+    - name: make All doodles
+      working-directory: ./doodles
+      run: make all
+    - name: Test obstacle path
+      working-directory: ./doodles
+      if: success()
+      run: ./obstacle-path
+      
+  build_encircular:
+    name: Build and test encircular algorithm
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    #- name: configure
+    #  run: ./configure
+    - name: Build Encircular
+      working-directory: ./Encircular
+      run: make encircular
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      working-directory: ./Encircular
+    - name: Test Encircular
+      working-directory: ./Encircular
+      run: make test
+
+  build_inst:
+    name: Building & testing message parser
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: build
+      working-directory: ./inst
+      run: make msg_parser
+    - name: test
+      working-directory: ./inst
+      run: |
+        ./msg_parser < 3_packets
+        ./msg_parser < 2_packets
+        ./msg_parser < 200_packets
+        ./msg_parser < 10_short_packets
+
+  build_routing:
+    name: Build & test EV routing challenge
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: build routing
+      working-directory: ./EV-routing-challenge
+      run: make solution
+    - name: build test
+      working-directory: ./EV-routing-challenge
+      run: make test
+    - name: test using checker
+      working-directory: ./EV-routing-challenge
+      run: |
+        ./test
+
+  build_gtest:
+    name: Build & test different GTest examples
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: cmake configure
+      working-directory: ./
+      run: cmake -S ./ -B build -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+    - name: build template_test
+      working-directory: ./
+      run: cmake --build ./build/ --target template_test
+    - name: run test
+      working-directory: ./build
+      run: GTEST_COLOR=1 ctest -V
+
