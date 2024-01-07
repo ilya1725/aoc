@@ -2,9 +2,6 @@
 	"folders": [
         {
             "path": "."
-        },
-        {
-            "path": "../../core_inf_sw_prod"
         }
     ],
     "settings": {
