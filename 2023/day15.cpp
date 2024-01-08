@@ -69,21 +69,79 @@ namespace util {
         }
         return output;
     }
+
+    const uint64_t calculate_hash(const std::string & input) {
+        uint64_t result{0};
+
+        for (const auto a : input) {
+            result += static_cast<uint64_t>(a);
+            result *= 17;
+            result = result & 0xFF;
+        }
+        return result;
+    }
+
+    const int64_t get_lens(const std::vector<std::pair<std::string, uint8_t>> & box,
+                            const std::string & lens_label) {
+        int64_t result{-1};
+        for (int64_t idx=0; const auto & l : box) {
+            if (l.first == lens_label) {
+                result = idx;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    const int64_t add_lens(std::vector<std::pair<std::string, uint8_t>> & box,
+                            const std::string & lens_label, const uint8_t value) {
+        int64_t result{-1};
+        auto it = box.begin();
+        for(;it != box.end(); it++){
+            if (it->first == lens_label) {
+                it->second = value;
+                break;
+            }
+        }
+
+        if (it == box.end()) {
+            box.push_back({lens_label, value});
+        }
+
+        return result;
+    }
+
+    const int64_t remove_lens(std::vector<std::pair<std::string, uint8_t>> & box,
+                            const std::string & lens_label) {
+        int64_t result{-1};
+        for(auto it = box.begin();it != box.end(); it++){
+            if (it->first == lens_label) {
+                box.erase(it);
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    const int64_t calculate_lens(const std::vector<std::pair<std::string, uint8_t>> & box,
+                                const size_t box_index) {
+        int64_t result{0};
+        for (uint64_t idx=1; const auto & l : box) {
+            result += ((box_index + 1) * idx * l.second);
+            idx++;
+        }
+
+        return result;
+    }
+
 }
 
 namespace ex {
-    const std::vector<std::string>
-        data1{  {"O....#...."},
-                {"O.OO#....#"},
-                {".....##..."},
-                {"OO.#O....O"},
-                {".O.....O#."},
-                {"O.#..O.#.#"},
-                {"..O..#O..O"},
-                {".......O.."},
-                {"#....###.."},
-                {"#OO..#...."},
-                };
+    const std::string data1{"HASH"};
+
+    const std::string data2{"rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7"};
 
 }
 
@@ -104,12 +162,21 @@ int main(int argc, char *argv[]) {
 
     // Example
     {
-        auto ex_data{ex::data1};
-        util::tiltN(ex_data);
-
-        const auto result{util::calculate_load(ex_data)};
+        const auto result{util::calculate_hash(ex::data1)};
 
         std::cout << "E1:" << result << std::endl;
+    }
+    {
+        const auto split_data{util::split(ex::data2, ',', true, std::vector<std::string>())};
+
+        std::vector<uint64_t>result_vector{};
+        for (const auto & d : split_data) {
+            result_vector.emplace_back(util::calculate_hash(d));
+        }
+
+        const auto total{std::reduce(result_vector.begin(), result_vector.end(), 0ULL)};
+
+        std::cout << "E1:" << total << std::endl;
     }
     std::cout << std::endl;
 
@@ -119,18 +186,103 @@ int main(int argc, char *argv[]) {
     if (1) {
         TimeMsr time_measure;
 
-        std::cout << "T1:" << result << std::endl;
+        const auto split_data{util::split(raw_input[0], ',', true, std::vector<std::string>())};
+
+        std::vector<uint64_t>result_vector{};
+        for (const auto & d : split_data) {
+            result_vector.emplace_back(util::calculate_hash(d));
+        }
+
+        const auto total{std::reduce(result_vector.begin(), result_vector.end(), 0ULL)};
+
+        std::cout << "T1:" << total << std::endl;
         std::cout << time_measure << std::endl;
     }
     std::cout << std::endl;
 
     // Example
     {
+        const auto split_data{util::split(ex::data2, ',', true, std::vector<std::string>())};
+        std::array<std::vector<std::pair<std::string, uint8_t>>, 256> boxes{};
+
+        for (const auto & d : split_data) {
+            size_t substr_count{0};
+            uint8_t lens_value{0};
+            bool lens_add{false};
+
+            if (d[d.length()-1] == '-') {
+                substr_count = d.length() - 1;
+            } else {
+                substr_count = d.length() - 2;
+                lens_add = true;
+                lens_value = std::atoi(&d[d.length()-1]);
+            }
+            const auto lens_label{d.substr(0, substr_count)};
+            const auto box_number(util::calculate_hash(lens_label));
+
+            if (lens_add) {
+                // add new lens to the box
+                const auto location{util::add_lens(boxes[box_number], lens_label, lens_value)};
+            } else {
+                // remove the lens from the box
+                const auto location{util::remove_lens(boxes[box_number], lens_label)};
+            }
+        }
+
+        // Calculate
+        std::vector<uint64_t>result_vector{};
+        for (uint64_t idx=0; const auto & b : boxes) {
+            result_vector.emplace_back(util::calculate_lens(b, idx));
+            idx++;
+        }
+
+        const auto total{std::reduce(result_vector.begin(), result_vector.end(), 0ULL)};
+
+        std::cout << "E2:" << total << std::endl;
     }
     std::cout << std::endl;
 
     // P2
     if (1) {
+        TimeMsr time_measure;
+
+        const auto split_data{util::split(raw_input[0], ',', true, std::vector<std::string>())};
+        std::array<std::vector<std::pair<std::string, uint8_t>>, 256> boxes{};
+
+        for (const auto & d : split_data) {
+            size_t substr_count{0};
+            uint8_t lens_value{0};
+            bool lens_add{false};
+
+            if (d[d.length()-1] == '-') {
+                substr_count = d.length() - 1;
+            } else {
+                substr_count = d.length() - 2;
+                lens_add = true;
+                lens_value = std::atoi(&d[d.length()-1]);
+            }
+            const auto lens_label{d.substr(0, substr_count)};
+            const auto box_number(util::calculate_hash(lens_label));
+
+            if (lens_add) {
+                // add new lens to the box
+                const auto location{util::add_lens(boxes[box_number], lens_label, lens_value)};
+            } else {
+                // remove the lens from the box
+                const auto location{util::remove_lens(boxes[box_number], lens_label)};
+            }
+        }
+
+        // Calculate
+        std::vector<uint64_t>result_vector{};
+        for (uint64_t idx=0; const auto & b : boxes) {
+            result_vector.emplace_back(util::calculate_lens(b, idx));
+            idx++;
+        }
+
+        const auto total{std::reduce(result_vector.begin(), result_vector.end(), 0ULL)};
+
+        std::cout << "T2:" << total << std::endl;
     }
     std::cout << std::endl;
 
