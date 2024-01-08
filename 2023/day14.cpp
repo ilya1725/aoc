@@ -16,7 +16,7 @@
 #include <variant>
 #include <vector>
 
-#include "/home/ilya/archer/work/ProjectBits/doodles/src/time_measure.hpp"
+#include "time_measure.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;

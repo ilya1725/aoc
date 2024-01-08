@@ -16,7 +16,7 @@
 #include <variant>
 #include <vector>
 
-#include "/home/ilya/archer/work/ProjectBits/doodles/src/time_measure.hpp"
+#include "time_measure.hpp"
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
@@ -119,10 +119,6 @@ int main(int argc, char *argv[]) {
     if (1) {
         TimeMsr time_measure;
 
-        util::tiltN(raw_input);
-
-        const auto result{util::calculate_load(raw_input)};
-
         std::cout << "T1:" << result << std::endl;
         std::cout << time_measure << std::endl;
     }
@@ -130,85 +126,11 @@ int main(int argc, char *argv[]) {
 
     // Example
     {
-        auto ex_data{ex::data1};
-        std::unordered_map<uint64_t, uint64_t> cycle_data{};
-        std::unordered_map<uint64_t, uint64_t> cycle_index{};
-
-        uint64_t result_index{0};
-
-        for (uint32_t i=0; i<1000000000; i++) {
-            util::tiltN(ex_data);
-            util::tiltW(ex_data);
-            util::tiltS(ex_data);
-            util::tiltE(ex_data);
-
-            const auto resultX{util::calculate_load(ex_data)};
-            std::cout << "E:" << i << ":" << resultX << std::endl;
-
-            const auto data_sha{util::calculate_sha(ex_data)};
-            if (cycle_data.find(data_sha) == cycle_data.end()) {
-                cycle_data[data_sha] = resultX;
-                cycle_index[data_sha] = i;
-            } else {
-                // found repeat
-                const auto previous_index{cycle_index[data_sha]};
-                const auto cycle{i - previous_index};
-                result_index = (1000000000 - previous_index) % cycle + previous_index - 1;
-                break;
-            }
-        }
-
-        uint64_t final_result{0};
-        for (auto data : cycle_index) {
-            if (data.second == result_index) {
-                final_result = cycle_data[data.first];
-                break;
-            }
-        }
-
-        std::cout << "E2:" << result_index << " " << final_result << std::endl;
     }
     std::cout << std::endl;
 
     // P2
     if (1) {
-        auto ex_data{raw_input};
-        std::unordered_map<uint64_t, uint64_t> cycle_data{};
-        std::unordered_map<uint64_t, uint64_t> cycle_index{};
-
-        uint64_t result_index{0};
-
-        for (uint32_t i=0; i<1000000000; i++) {
-            util::tiltN(ex_data);
-            util::tiltW(ex_data);
-            util::tiltS(ex_data);
-            util::tiltE(ex_data);
-
-            const auto resultX{util::calculate_load(ex_data)};
-            std::cout << "E:" << i << ":" << resultX << std::endl;
-
-            const auto data_sha{util::calculate_sha(ex_data)};
-            if (cycle_data.find(data_sha) == cycle_data.end()) {
-                cycle_data[data_sha] = resultX;
-                cycle_index[data_sha] = i;
-            } else {
-                // found repeat
-                const auto previous_index{cycle_index[data_sha]};
-                const auto cycle{i - previous_index};
-                result_index = (1000000000 - previous_index) % cycle + previous_index - 1;
-                break;
-            }
-        }
-
-        uint64_t final_result{0};
-        for (auto data : cycle_index) {
-            if (data.second == result_index) {
-                final_result = cycle_data[data.first];
-                break;
-            }
-        }
-
-        std::cout << "P2:" << result_index << " " << final_result << std::endl;
     }
     std::cout << std::endl;
 
