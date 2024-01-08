@@ -7,6 +7,10 @@ on:
       - master         # Push events on master branch
       - '*'            # Matches all branch and tag names that don't contain a slash (/).
 
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
 jobs:
   build_aoc:
     name: Build AOC code
