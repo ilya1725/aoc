@@ -32,7 +32,7 @@ namespace part_one {
 
     std::tuple<std::vector<long>, std::vector<long>> get_values(const std::vector<std::string> & input, bool part2 = false) {
         std::vector<long> result_left{};
-        std::vector<long> result_right{}};
+        std::vector<long> result_right{};
         for (const std::string & line : input) {
             std::stringstream ss(line);
             long number;
