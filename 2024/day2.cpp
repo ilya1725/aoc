@@ -30,7 +30,7 @@ namespace part_one {
         return output;
     }
 
-    std::vector<std::vector<short>> get_values(const std::vector<std::string> & input, bool part2 = false) {
+    std::vector<std::vector<short>> get_values(const std::vector<std::string> & input) {
         std::vector<std::vector<short>> result{};
         for (const std::string & line : input) {
             std::vector<short> result_line{};

@@ -30,7 +30,7 @@ namespace part_one {
         return output;
     }
 
-    std::tuple<std::vector<long>, std::vector<long>> get_values(const std::vector<std::string> & input, bool part2 = false) {
+    std::tuple<std::vector<long>, std::vector<long>> get_values(const std::vector<std::string> & input) {
         std::vector<long> result_left{};
         std::vector<long> result_right{};
         for (const std::string & line : input) {
