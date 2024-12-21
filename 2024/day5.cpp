@@ -151,7 +151,8 @@ namespace part_two {
             for (const auto instr : instructions) {
                 size_t first_found{upd.size()};
                 size_t second_found{upd.size()};
-                for (const auto [index, page] : std::views::enumerate(upd)) {
+                for (size_t index=0; index < upd.size(); index++) {
+                    const auto & page{upd[index]};
                     if (instr.first == page) {
                         first_found = index;
                         continue;
@@ -195,7 +196,8 @@ namespace part_two {
                 for (const auto instr : instructions) {
                     size_t first_found{upd.size()};
                     size_t second_found{upd.size()};
-                    for (const auto [index, page] : std::views::enumerate(upd)) {
+                    for (size_t index=0; index < upd.size(); index++) {
+                        const auto & page{upd[index]};
                         if (instr.first == page) {
                             first_found = index;
                             continue;
