@@ -69,7 +69,7 @@ namespace part_one {
             }
 
             std::stringstream ss(line);
-            u_int32_t a, b;
+            uint32_t a, b;
             char pipe{'|'};
             ss >> a >> pipe >> b;
             result.emplace_back(a, b);
@@ -191,7 +191,7 @@ namespace part_two {
 
         u_int16_t upd_index{0};
         for (auto  upd : updates) {
-            u_int32_t count{0};
+            uint32_t count{0};
             while (true) {
                 bool exit_flag = true;
                 for (const auto instr : instructions) {

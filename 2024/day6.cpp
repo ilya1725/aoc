@@ -1,6 +1,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <format>
 #include <fstream>
 #include <iostream>
@@ -157,8 +158,8 @@ namespace part_one {
         return result;
     }
 
-    u_int32_t get_path_count(const std::vector<std::string> & input, const char key = 'X') {
-        u_int32_t count{0};
+    uint32_t get_path_count(const std::vector<std::string> & input, const char key = 'X') {
+        uint32_t count{0};
 
         for (const auto & line : input) {
             for (const auto c : line) {
