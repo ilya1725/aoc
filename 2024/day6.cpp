@@ -170,7 +170,6 @@ namespace part_one {
         }
         return count;
     }
-
 }
 
 namespace part_two {

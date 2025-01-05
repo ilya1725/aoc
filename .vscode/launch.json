@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch Day7",
+            "name": "(gdb) Launch Day8",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/2024/2024-day7",
-            "args": ["${workspaceFolder}/2024/day7.input"],
+            "program": "${workspaceFolder}/build/2024/2024-day8",
+            "args": ["${workspaceFolder}/2024/day8.input"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
