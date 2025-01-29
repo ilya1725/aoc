@@ -1,15 +1,16 @@
 
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <ranges>
 #include <regex>
 #include <sstream>
 #include <stack>
 #include <string_view>
 #include <tuple>
 #include <vector>
-#include <ranges>
 
 namespace part_one {
 
@@ -58,8 +59,8 @@ namespace part_one {
         return output;
     }
 
-    std::vector<std::pair<u_int8_t, u_int8_t>> get_instructions(const std::vector<std::string> & input) {
-        std::vector<std::pair<u_int8_t, u_int8_t>> result{};
+    std::vector<std::pair<uint8_t, uint8_t>> get_instructions(const std::vector<std::string> & input) {
+        std::vector<std::pair<uint8_t, uint8_t>> result{};
 
         bool instruction_flag{false};
         for (const auto & line : input) {
@@ -78,8 +79,8 @@ namespace part_one {
         return result;
     }
 
-    std::vector<std::vector<u_int8_t>> get_updates(const std::vector<std::string> & input) {
-        std::vector<std::vector<u_int8_t>> result{};
+    std::vector<std::vector<uint8_t>> get_updates(const std::vector<std::string> & input) {
+        std::vector<std::vector<uint8_t>> result{};
 
         bool instruction_flag{false};
         for (const auto & line : input) {
@@ -91,7 +92,7 @@ namespace part_one {
             }
 
             if (instruction_flag) {
-                std::vector<u_int8_t> instruction;
+                std::vector<uint8_t> instruction;
                 std::stringstream ss(line);
                 std::string item;
 
@@ -105,8 +106,8 @@ namespace part_one {
         return result;
     }
 
-    std::vector<std::vector<u_int8_t>> find_correct(const std::vector<std::vector<u_int8_t>> & updates, const std::vector<std::pair<u_int8_t, u_int8_t>> & instructions) {
-        std::vector<std::vector<u_int8_t>> result{};
+    std::vector<std::vector<uint8_t>> find_correct(const std::vector<std::vector<uint8_t>> & updates, const std::vector<std::pair<uint8_t, uint8_t>> & instructions) {
+        std::vector<std::vector<uint8_t>> result{};
 
         for (const auto & upd : updates) {
             size_t failed_count{0};
@@ -144,11 +145,11 @@ namespace part_one {
 }
 
 namespace part_two {
-    std::vector<std::vector<u_int8_t>> find_incorrect(const std::vector<std::vector<u_int8_t>> & updates, const std::vector<std::pair<u_int8_t, u_int8_t>> & instructions) {
-        std::vector<std::vector<u_int8_t>> result{};
+    std::vector<std::vector<uint8_t>> find_incorrect(const std::vector<std::vector<uint8_t>> & updates, const std::vector<std::pair<uint8_t, uint8_t>> & instructions) {
+        std::vector<std::vector<uint8_t>> result{};
 
         for (auto upd : updates) {
-            std::vector<std::pair<u_int8_t, u_int8_t>> failed_rules{};
+            std::vector<std::pair<uint8_t, uint8_t>> failed_rules{};
             for (const auto instr : instructions) {
                 size_t first_found{upd.size()};
                 size_t second_found{upd.size()};
@@ -186,10 +187,10 @@ namespace part_two {
         return result;
     }
 
-    std::vector<std::vector<u_int8_t>> find_incorrect2(const std::vector<std::vector<u_int8_t>> & updates, const std::vector<std::pair<u_int8_t, u_int8_t>> & instructions) {
-        std::vector<std::vector<u_int8_t>> result{};
+    std::vector<std::vector<uint8_t>> find_incorrect2(const std::vector<std::vector<uint8_t>> & updates, const std::vector<std::pair<uint8_t, uint8_t>> & instructions) {
+        std::vector<std::vector<uint8_t>> result{};
 
-        u_int16_t upd_index{0};
+        uint16_t upd_index{0};
         for (auto  upd : updates) {
             uint32_t count{0};
             while (true) {
@@ -248,7 +249,7 @@ int main() {
 
         const auto correct{part_one::find_correct(updates, instructions)};
 
-        u_int16_t final_count{0};
+        uint16_t final_count{0};
         for (const auto & c : correct) {
             if ((c.size() & 0x1) == 0) {
                 std::cerr << "Something is not right" << std::endl;
@@ -265,7 +266,7 @@ int main() {
 
         const auto correct1{part_one::find_correct(updates1, instructions1)};
 
-        u_int16_t final_count1{0};
+        uint16_t final_count1{0};
         for (const auto & c : correct1) {
             if ((c.size() & 0x1) == 0) {
                 std::cerr << "Something is not right" << std::endl;
@@ -284,7 +285,7 @@ int main() {
         const auto incorrect{part_two::find_incorrect2(updates, instructions)};
         const auto check{part_one::find_correct(incorrect, instructions)};
 
-        u_int16_t final_count{0};
+        uint16_t final_count{0};
         for (const auto & c : incorrect) {
             if ((c.size() & 0x1) == 0) {
                 std::cerr << "Something is not right" << std::endl;
@@ -302,7 +303,7 @@ int main() {
         const auto incorrect1{part_two::find_incorrect2(updates1, instructions1)};
         const auto check1{part_one::find_correct(incorrect1, instructions1)};
 
-        u_int16_t final_count1{0};
+        uint16_t final_count1{0};
         for (const auto & c : incorrect1) {
             if ((c.size() & 0x1) == 0) {
                 std::cerr << "Something is not right" << std::endl;

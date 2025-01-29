@@ -25,6 +25,11 @@
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "Add source directory",
+                    "text": "directory ${workspaceFolder}/2024",
+                    "ignoreFailures": true
                 }
             ]
         }

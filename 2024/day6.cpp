@@ -186,7 +186,7 @@ namespace part_two {
         std::set<std::array<size_t, 4>> loop_set;
 
         auto current{start};
-        u_int16_t count{0};
+        uint16_t count{0};
 
         while(true) {
             const auto current_char{result[current.second][current.first]};
@@ -280,10 +280,10 @@ namespace part_two {
     }
 
     // x - first, y - second
-    u_int16_t get_route_loop_count(const std::vector<std::string> & input,
+    uint16_t get_route_loop_count(const std::vector<std::string> & input,
                                     const std::pair<size_t, size_t> & start) {
-        u_int16_t count{0};
-        u_int16_t attempts_count{0};
+        uint16_t count{0};
+        uint16_t attempts_count{0};
         std::vector<std::string> obstacles{input};
         obstacles[start.second][start.first] = '^';
 

@@ -3,6 +3,7 @@
 #include <array>
 #include <cmath>
 #include <concepts>
+#include <cstdint>
 #include <format>
 #include <fstream>
 #include <iostream>
@@ -82,6 +83,9 @@ namespace part_one {
                                             };
 
     const std::vector<std::string> input_ex4{"233313312141413140202333133121414131402"};
+
+    const std::vector<std::string> input_ex5{"1313165"};
+    const std::vector<std::string> input_ex6{"9953877292941"};
 
     std::vector<int16_t> spread_disk(const std::vector<std::string> & input) {
         std::vector<int16_t> result{};
@@ -163,6 +167,27 @@ namespace part_two {
         return size;
     }
 
+    // going left.
+    // return {size, pointer}
+    std::pair<int16_t, size_t> find_block_size2(const std::vector<int16_t> & input,
+                                                size_t end_it) {
+        int16_t size{1};
+
+        while (input[end_it] == empty_block && end_it != 0) {
+            end_it--;
+        }
+
+        const auto value{input[end_it]};
+        while (end_it != 0) {
+            if (input[end_it-1] != value) {
+                break;
+            }
+            end_it--;
+            size++;
+        }
+        return {size, end_it};
+    }
+
     // going right
     std::pair<int16_t, size_t> find_next_empty_block_size(const std::vector<int16_t> & input,
                                                         const size_t start_it,
@@ -190,7 +215,35 @@ namespace part_two {
         return {size, begin_empty_it};
     }
 
-    std::vector<int16_t> compact_disk(const std::vector<int16_t> & input, const bool print = false) {
+    // Find the location of an empty block of the specified size. Return end_it if not found
+    // going right
+    size_t find_next_empty_block_size(const std::vector<int16_t> & input,
+                                        const size_t size,
+                                        const size_t start_it,
+                                        const size_t end_it) {
+        auto empty_it{start_it};
+
+        while (empty_it != end_it) {
+            bool found_block{true};
+            for (auto i=empty_it; i<(empty_it+size); i++) {
+                if (input[i] != empty_block) {
+                    found_block = false;
+                    break;
+                }
+            }
+
+            if (found_block == true) {
+                break;
+            }
+            empty_it++;
+        }
+
+        return empty_it;
+    }
+
+    // Note: this version is incorrect
+    std::vector<int16_t> compact_disk(const std::vector<int16_t> & input,
+                                    const bool print = false) {
         std::vector<int16_t> result{input};
 
         size_t gap_it{0};   // result.begin()
@@ -248,6 +301,46 @@ namespace part_two {
 
         return result;
     }
+
+    std::vector<int16_t> compact_disk2(const std::vector<int16_t> & input, const bool print = false) {
+        std::vector<int16_t> result{input};
+
+        size_t gap_it{0};   // result.begin()
+        size_t end_it{result.size()-1};
+
+        if (print) {
+            pretty_print(result);
+        }
+
+        while(true) {
+            auto candidate_block{find_block_size2(result, end_it)};
+
+            auto candidate_spot{find_next_empty_block_size(result, candidate_block.first, 0, candidate_block.second)};
+
+            if (candidate_spot == candidate_block.second) {
+                // didn't find any
+            } else {
+                // copy the data
+                for (auto i=0; i<candidate_block.first; i++) {
+                    const auto tmp_value{result[i+candidate_spot]};
+                    result[i+candidate_spot] = result[i+candidate_block.second];
+                    result[i+candidate_block.second] = tmp_value;
+                }
+
+                if (print) {
+                    pretty_print(result);
+                }
+            }
+            if (candidate_block.second == 0) {
+                std::cout << "Block at the beginning" << std::endl;
+                break;
+            }
+            end_it = candidate_block.second - 1;
+        }
+
+        return result;
+    }
+
 }
 
 int main() {
@@ -269,20 +362,32 @@ int main() {
 
     // P2
     {
-        const auto data{part_one::spread_disk(part_one::input_ex1)};
-        const auto compact_data{part_two::compact_disk(data, true)};
+        // ex1
+        {
+            const auto data{part_one::spread_disk(part_one::input_ex1)};
+            const auto compact_data{part_two::compact_disk2(data, true)};
 
-        const auto result_ex1{part_one::checksum(compact_data)};
-        std::cout << "Result ex1.2: " << result_ex1 << std::endl;
+            const auto result_ex1{part_one::checksum(compact_data)};
+            std::cout << "Result ex1.2: " << result_ex1 << std::endl;
+        }
+
+        // ex2
+        {
+            const auto data{part_one::spread_disk(part_one::input_ex6)};
+            const auto compact_data{part_two::compact_disk2(data, true)};
+
+            const auto result_ex1{part_one::checksum(compact_data)};
+            std::cout << "Result ex5.2: " << result_ex1 << std::endl;
+        }
 
         const auto input1_p1{get_input("./day9.input")};
         const auto data_p1{part_one::spread_disk(input1_p1)};
-        const auto compact_data_p1{part_two::compact_disk(data_p1)};
+        const auto compact_data_p1{part_two::compact_disk2(data_p1)};
 
         const auto result_p1{part_one::checksum(compact_data_p1)};
 
         // 7379300303875 is too high
-        std::cout << "Result2.1: " << result_p1 << " Correct result: 6378826667552" << std::endl;
+        std::cout << "Result2.1: " << result_p1 << " Correct result: 6413328569890" << std::endl;
     }
 
     return 0;

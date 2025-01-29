@@ -1,6 +1,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -11,7 +12,7 @@
 #include <vector>
 
 namespace part_one {
-    enum class Direction : u_int8_t {
+    enum class Direction : uint8_t {
         N,
         NE,
         E,
@@ -167,14 +168,14 @@ namespace part_two {
     // M M
     //  A
     // S S
-    enum class Direction : u_int8_t {
+    enum class Direction : uint8_t {
         left_top,
         right_top,
         left_bottom,
         right_bottom
     };
 
-    const u_int8_t DirCount{4};
+    const uint8_t DirCount{4};
     const std::array<std::array<int8_t, 8>, DirCount> Adjustments {{
         {-1, -1, -1, +1, +1, +1, +1, -1},   // top left
         {-1, +1, +1, +1, +1, -1, -1, -1},   // top right
@@ -183,7 +184,7 @@ namespace part_two {
     }};
 
     // start point leaves enough space
-    bool find_x(const std::vector<std::string> & input, const std::pair<size_t, size_t> start, const u_int8_t dir) {
+    bool find_x(const std::vector<std::string> & input, const std::pair<size_t, size_t> start, const uint8_t dir) {
 
         size_t curr_x{start.first};
         size_t curr_y{start.second};
@@ -205,7 +206,7 @@ namespace part_two {
     }
 
     // start point leaves enough space
-    bool fill_x(std::vector<std::string> & input, const std::pair<size_t, size_t> start, const u_int8_t dir) {
+    bool fill_x(std::vector<std::string> & input, const std::pair<size_t, size_t> start, const uint8_t dir) {
         bool result{true};
 
         size_t curr_x{start.first};
@@ -235,7 +236,7 @@ namespace part_two {
 
         for (size_t x=1; x<width-1; x++) {
             for (size_t y=1; y<height-1; y++) {
-                for (u_int8_t direction=0; direction<DirCount; direction++) {
+                for (uint8_t direction=0; direction<DirCount; direction++) {
                     const bool found{find_x(input, {x, y}, direction)};
 
                     if (found) {
