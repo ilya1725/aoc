@@ -5,16 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch Day9",
+            "name": "(gdb) Launch Day10",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/2024/2024-day9",
-            "args": ["${workspaceFolder}/2024/day9.input"],
+            "program": "${workspaceFolder}/build/2024/2024-day10",
+            "args": ["${workspaceFolder}/2024/day10.input"],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}/2024",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
+            "showDisplayString": true,
+            "linux": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb",
+				"miDebuggerPath": "C:/tools/msys64/mingw64/bin/gdb.exe",
+				"env": {
+					"Path": "C:/tools/msys64/mingw64/bin"
+				}
+            },
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
