@@ -8,8 +8,8 @@
             "name": "(gdb) Launch Day10",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/2024/2024-day10",
-            "args": ["${workspaceFolder}/2024/day10.input"],
+            "program": "${workspaceFolder}/build/2024/2024-day11",
+            "args": ["${workspaceFolder}/2024/day11.input"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/2024",
             "environment": [],
@@ -24,10 +24,7 @@
             },
             "windows": {
                 "MIMode": "gdb",
-				"miDebuggerPath": "C:/tools/msys64/mingw64/bin/gdb.exe",
-				"env": {
-					"Path": "C:/tools/msys64/mingw64/bin"
-				}
+				"miDebuggerPath": "C:/tools/msys64/mingw64/bin/gdb.exe"
             },
             "setupCommands": [
                 {
