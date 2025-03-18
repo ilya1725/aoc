@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Day11",
+            "name": "Launch Day12",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/2024/2024-day11",
-            "args": ["${workspaceFolder}/2024/day11.input"],
+            "program": "${workspaceFolder}/build/2024/2024-day12",
+            "args": ["${workspaceFolder}/2024/day12.input"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/2024",
             "environment": [],
