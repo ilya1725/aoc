@@ -15,7 +15,7 @@ jobs:
   build_aoc:
     name: Build AOC code
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v3

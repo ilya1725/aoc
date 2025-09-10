@@ -98,8 +98,9 @@ int main(int argc, char *argv[]) {
     }
 
     // Example
+    const bool result{false};
     {
-         std::cout << "E1:" << result << std::endl;
+        std::cout << "E1:" << result << std::endl;
     }
     std::cout << std::endl;
 
@@ -109,23 +110,17 @@ int main(int argc, char *argv[]) {
     const auto data_input{util::get_input(data_file)};
     if (1) {
 
-         std::cout << "T1:" << result << std::endl;
+        std::cout << "T1:" << result << std::endl;
     }
     std::cout << std::endl;
 
     // Example
     {
-        std::cout << "E2 max:" << *std::max_element(results.begin(), results.end()) << std::endl;
+        // std::cout << "E2 max:" << *std::max_element(results.begin(), results.end()) << std::endl;
     }
 
     std::cout << std::endl;
 
-    // P2
-    if (1) {
-        std::vector<uint32_t> results{};
-
-        std::cout << "T2 max:" << *std::max_element(results.begin(), results.end()) << std::endl;
-    }
     std::cout << std::endl;
 
     return 0;

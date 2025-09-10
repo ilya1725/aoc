@@ -5,16 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "Launch Day12",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/2023/2023-day16",
-            "args": ["${workspaceFolder}/2023/day16.input"],
+            "program": "${workspaceFolder}/build/2024/2024-day12",
+            "args": ["${workspaceFolder}/2024/day12.input"],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}/2024",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
+            "showDisplayString": true,
+            "linux": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb",
+				"miDebuggerPath": "C:/tools/msys64/mingw64/bin/gdb.exe"
+            },
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -24,6 +35,11 @@
                 {
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Add source directory",
+                    "text": "directory ${workspaceFolder}/2024",
                     "ignoreFailures": true
                 }
             ]
