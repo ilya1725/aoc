@@ -408,7 +408,7 @@ int main(int argc, char* argv[]) {
         std::cout << "P1: " << result << std::endl;
 
         {
-            const auto input1_p1{get_input("./day13.input")};
+            const auto input1_p1{get_input("./day12.input")};
             part_one::find_plots(input1_p1, part_one::plots);
             uint64_t result{0};
             for (auto plot : part_one::plots) {
@@ -433,7 +433,7 @@ int main(int argc, char* argv[]) {
         std::cout << "P2: " << result << std::endl;
 
         {
-            const auto input1_p2{get_input("./day13.input")};
+            const auto input1_p2{get_input("./day12.input")};
             part_one::find_plots(input1_p2, part_one::plots);
             uint64_t result{0};
             for (auto plot : part_one::plots) {
