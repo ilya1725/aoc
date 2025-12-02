@@ -8,3 +8,11 @@ All the code from the [Advent of Code](https://adventofcode.com/) (AOC) problems
 ## 2023
 
 [Link](./2023)
+
+## 2024
+
+[Link](./2024)
+
+## 2025
+
+[Link](./2025)
